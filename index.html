@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chalk & Wall | 클라이밍 다이어리</title>
+    <style>
+        /* 기본 스타일 리셋 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 네비게이션 바 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #2b5c8f;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2b5c8f;
+        }
+
+        /* 강조하고 싶은 메뉴 스타일 (방명록 전용) */
+        .nav-links a.highlight {
+            color: #2b5c8f;
+            background-color: #eef2f7;
+            padding: 5px 12px;
+            border-radius: 15px;
+        }
+        .nav-links a.highlight:hover {
+            background-color: #2b5c8f;
+            color: white;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            padding: 100px 20px 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #2b5c8f;
+        }
+
+        /* 홈 / 히어로 섹션 */
+        #home {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+            color: white;
+            padding-top: 0;
+        }
+
+        #home h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        #home p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background-color: #2b5c8f;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1e4368;
+        }
+
+        /* 프로필 & 로그 섹션 */
+        .log-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-tag {
+            display: inline-block;
+            background: #eef2f7;
+            color: #2b5c8f;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        /* 장비 세션 */
+        .gear-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .gear-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: calc(33.333% - 20px);
+            min-width: 250px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .gear-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        /* 푸터 / 연락처 */
+        footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+
+        .sns-links a {
+            margin: 0 10px;
+            color: #aaa;
+            transition: color 0.3s;
+        }
+
+        .sns-links a:hover {
+            color: white;
+        }
+
+        /* 반응형 모바일 스타일 */
+        @media (max-width: 768px) {
+            #home h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .gear-item { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 헤더 / 네비게이션 -->
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo">🧗‍♂️ CLIMB_LOG</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#logs">Climbing Log</a></li>
+                <li><a href="#gear">My Gear</a></li>
+                <!-- 🌟 방명록 메뉴 추가 및 패들릿 링크 연결 -->
+                <li><a href="https://padlet.com/minje1112333/padlet-ae38piu5l9lwoyj2" target="_blank" rel="noopener noreferrer" class="highlight">✏️ Guestbook</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 홈 섹션 -->
+    <section id="home">
+        <h1>홀드를 잡는 순간, 자유를 느낀다</h1>
+        <p>자연 바위와 실내 암장을 넘나드는 클라이머의 기록 공간입니다.</p>
+        <div style="display: flex; gap: 15px;">
+            <a href="#logs" class="btn">최근 등반 보기</a>
+            <!-- 메인 화면에도 방명록 버튼 추가 -->
+            <a href="https://padlet.com/minje1112333/padlet-ae38piu5l9lwoyj2" target="_blank" rel="noopener noreferrer" class="btn" style="background-color: transparent; border: 2px solid white;">방명록 남기기</a>
+        </div>
+    </section>
+
+    <!-- 소개 섹션 -->
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+            <p style="font-size: 1.1rem; color: #555;">
+                안녕하세요! 볼더링과 리드 클라이밍을 사랑하는 클라이머입니다. <br>
+                현재 홈짐은 [암장 이름]이며, 주 3회 이상 완등을 목표로 트레이닝하고 있습니다. <br>
+                최고 그레이드는 볼더링 <strong>V5</strong>, 리드는 <strong>5.11a</strong> 입니다.
+            </p>
+        </div>
+    </section>
+
+    <!-- 클라이밍 로그 섹션 -->
+    <section id="logs">
+        <h2 class="section-title">Climbing Log</h2>
+        <div class="log-grid">
+            <!-- 로그 카드 1 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1564769662531-49182897dd2e?auto=format&fit=crop&w=600&q=80" alt="원정" class="card-img">
+                <div class="card-content">
+                    <span class="card-tag">자연 바위</span>
+                    <h3 class="card-title">선운산 리드 등반 원정</h3>
+                    <p style="color:#777; font-size:0.9rem; margin-bottom:10px;">2026.05.15</p>
+                    <p>처음으로 도전한 선운산! 짜릿한 고도감 속에서 첫 오버행 코스 완등에 성공했습니다.</p>
+                </div>
+            </div>
+            <!-- 로그 카드 2 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1578762560072-46ed12e5252a?auto=format&fit=crop&w=600&q=80" alt="실내암장" class="card-img">
+                <div class="card-content">
+                    <span class="card-tag">볼더링</span>
+                    <h3 class="card-title">더클라임 홍대점 원정 성공</h3>
+                    <p style="color:#777; font-size:0.9rem; margin-bottom:10px;">2026.06.02</p>
+                    <p>미뤄뒀던 빨간색 테이프 문제를 5트랙 끝에 다이노 동작으로 깔끔하게 완등!</p>
+                </div>
+            </div>
+            <!-- 로그 카드 3 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1601224919936-2ea9e54b35a7?auto=format&fit=crop&w=600&q=80" alt="트레이닝" class="card-img">
+                <div class="card-content">
+                    <span class="card-tag">트레이닝</span>
+                    <h3 class="card-title">행보드 핑거보드 루틴 시작</h3>
+                    <p style="color:#777; font-size:0.9rem; margin-bottom:10px;">2026.06.20</p>
+                    <p>손가락 부상 방지와 인대 강화를 위해 주 2회 7초 매달리기 루틴을 시작했습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 장비 섹션 -->
+    <section id="gear">
+        <h2 class="section-title">My Gear</h2>
+        <div class="gear-list">
+            <div class="gear-item">
+                <div class="gear-icon">👟</div>
+                <h3>라스포르티바 솔루션 콤프</h3>
+                <p style="color:#666; font-size:0.9rem; margin-top:5px;">발을 칼처럼 잡아주는 최고의 볼더링화</p>
+            </div>
+            <div class="gear-item">
+                <div class="gear-icon">👜</div>
+                <h3>오가닉 초크백</h3>
+                <p style="color:#666; font-size:0.9rem; margin-top:5px;">세상에 하나뿐인 유니크한 디자인</p>
+            </div>
+            <div class="gear-item">
+                <div class="gear-icon">🧴</div>
+                <h3>프릭션 랩스 액상 초크</h3>
+                <p style="color:#666; font-size:0.9rem; margin-top:5px;">땀이 많은 손에 최고의 접지력을 선사</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 및 연락처 -->
+    <footer>
+        <p>© 2026 Climber's Diary. All rights reserved.</p>
+        <p>Email: climber@example.com</p>
+        <div class="sns-links">
+            <a href="https://padlet.com/minje1112333/padlet-ae38piu5l9lwoyj2" target="_blank" rel="noopener noreferrer">Guestbook</a> | 
+            <a href="#">Instagram</a> | 
+            <a href="#">YouTube</a>
+        </div>
+    </footer>
+
+</body>
+</html>
